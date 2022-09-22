@@ -1,7 +1,7 @@
 package br.com.gusta.integrationtests.swagger;
 
 import br.com.gusta.configs.*;
-import br.com.gusta.integrationtests.textcontainers.*;
+import br.com.gusta.integrationtests.testcontainers.*;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
