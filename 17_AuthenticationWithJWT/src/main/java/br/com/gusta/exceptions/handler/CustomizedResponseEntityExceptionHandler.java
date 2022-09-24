@@ -1,8 +1,6 @@
 package br.com.gusta.exceptions.handler;
 
-import br.com.gusta.exceptions.ExceptionResponse;
-import br.com.gusta.exceptions.RequiredObjectIsNullException;
-import br.com.gusta.exceptions.ResourceNotFoundException;
+import br.com.gusta.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,5 +39,12 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 		ExceptionResponse exResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(exResponse, HttpStatus.BAD_REQUEST);
 	}
-	
+	@ExceptionHandler(InvalidJwtAuthenticationException.class)
+	public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationExceptions(
+			Exception ex, WebRequest request) {
+
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),	ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+	}
+
 }
