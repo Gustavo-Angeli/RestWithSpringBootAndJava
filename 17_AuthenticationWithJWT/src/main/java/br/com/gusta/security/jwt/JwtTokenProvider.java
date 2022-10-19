@@ -26,11 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class JwtTokenProvider {
 
-    @Value("${security.jwt.token.secret-key:secret}")
-    private String secretKey = "secret";
+    @Value("${security.jwt.token.secret-key}")
+    private String secretKey;
 
-    @Value("${security.jwt.token.expire-length:3600000}")
-    private long validityInMilliseconds = 3600000; // 1h
+    @Value("${security.jwt.token.expire-length}")
+    private long validityInMilliseconds;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -64,19 +64,23 @@ public class JwtTokenProvider {
         return createAccessToken(username, roles);
     }
 
+    //1
     private String getAccessToken(String username, List<String> roles, Date now, Date validity) {
         String issuerUrl = ServletUriComponentsBuilder
                 .fromCurrentContextPath().build().toUriString();
+        //used to get the actual url, example: localhost://8080/example
+
         return JWT.create()
-                .withClaim("roles", roles)
-                .withIssuedAt(now)
-                .withExpiresAt(validity)
+                .withClaim("roles", roles)//list of permissions
+                .withIssuedAt(now)//when has been generated
+                .withExpiresAt(validity)//when the token expire
                 .withSubject(username)
                 .withIssuer(issuerUrl)
                 .sign(algorithm)
                 .strip();
     }
 
+    //2
     private String getRefreshToken(String username, List<String> roles, Date now) {
         Date validityRefreshToken = new Date(now.getTime() + (validityInMilliseconds * 3));
         return JWT.create()
@@ -88,6 +92,7 @@ public class JwtTokenProvider {
                 .strip();
     }
 
+    //4
     public Authentication getAuthentication(String token) {
         DecodedJWT decodedJWT = decodedToken(token);
         UserDetails userDetails = this.userDetailsService
@@ -95,6 +100,7 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
+    //3
     private DecodedJWT decodedToken(String token) {
         Algorithm alg = Algorithm.HMAC256(secretKey.getBytes());
         JWTVerifier verifier = JWT.require(alg).build();
@@ -102,6 +108,7 @@ public class JwtTokenProvider {
         return decodedJWT;
     }
 
+    //5
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
 
@@ -112,6 +119,7 @@ public class JwtTokenProvider {
         return null;
     }
 
+    //6
     public boolean validateToken(String token) {
         DecodedJWT decodedJWT = decodedToken(token);
         try {
