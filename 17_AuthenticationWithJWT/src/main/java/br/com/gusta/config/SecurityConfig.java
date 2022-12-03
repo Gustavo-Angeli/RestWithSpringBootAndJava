@@ -6,7 +6,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.*;
 import org.springframework.security.config.http.*;
 import org.springframework.security.crypto.password.*;
 

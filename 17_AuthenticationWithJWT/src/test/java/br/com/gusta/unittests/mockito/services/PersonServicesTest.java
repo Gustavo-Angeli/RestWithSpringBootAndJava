@@ -75,7 +75,7 @@ class PersonServicesTest {
 		assertEquals("Addres Test10", personSeven.getAddress());
 		assertEquals("First Name Test10", personSeven.getFirstName());
 		assertEquals("Last Name Test10", personSeven.getLastName());
-		assertEquals("Female", personSeven.getGender());
+		assertEquals("Male", personSeven.getGender());
 	}
 
 	@Test
