@@ -1,12 +1,13 @@
 package br.com.gusta.integrationtests.vo;
 
-import com.fasterxml.jackson.annotation.*;
-import com.github.dozermapper.core.*;
+
 import org.springframework.hateoas.*;
 
+import javax.xml.bind.annotation.*;
 import java.io.*;
 import java.util.*;
 
+@XmlRootElement
 public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,6 +17,8 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
 	private String lastName;
 	private String address;
 	private String gender;
+
+	public PersonVO() {}
 
 	public Long getId() {
 		return id;

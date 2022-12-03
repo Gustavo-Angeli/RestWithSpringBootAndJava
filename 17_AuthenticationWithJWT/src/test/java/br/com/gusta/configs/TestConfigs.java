@@ -14,4 +14,6 @@ public class TestConfigs {
     public static final String ORIGIN_LOCALHOST= "http://localhost:8080";
     public static final String ORIGIN_MY_GITHUB = "https://github.com/Gust4ngl";
 
+    public static final String AUTHORIZATION_PREFIX = "Bearer ";
+
 }

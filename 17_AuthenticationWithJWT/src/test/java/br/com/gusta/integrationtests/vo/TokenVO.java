@@ -1,9 +1,11 @@
 package br.com.gusta.integrationtests.vo;
 
+import javax.xml.bind.annotation.*;
 import java.io.*;
 import java.util.*;
 
-public class TokenVO implements Serializable{
+@XmlRootElement
+public class TokenVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
