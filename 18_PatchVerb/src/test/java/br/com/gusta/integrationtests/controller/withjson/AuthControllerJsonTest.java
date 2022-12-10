@@ -1,4 +1,6 @@
-package br.com.gusta.integrationtests.controller.withyaml;
+package br.com.gusta.integrationtests.controller.withjson;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import br.com.gusta.configs.*;
 import br.com.gusta.integrationtests.testcontainers.*;
@@ -8,12 +10,11 @@ import com.fasterxml.jackson.databind.*;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.*;
 
-import static io.restassured.RestAssured.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static io.restassured.RestAssured.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AuthControllerYamlTest extends AbstractIntegrationTest {
+public class AuthControllerJsonTest extends AbstractIntegrationTest {
 
     private static TokenVO tokenVO;
 
@@ -26,7 +27,7 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
         tokenVO = given()
                 .basePath("/auth/signin")
                     .port(TestConfigs.SERVER_PORT)
-                    .contentType(TestConfigs.CONTENT_TYPE_YML)
+                    .contentType(TestConfigs.CONTENT_TYPE_JSON)
                 .body(user)
                     .when()
                 .post()
@@ -49,7 +50,7 @@ public class AuthControllerYamlTest extends AbstractIntegrationTest {
         var newTokenVO = given()
                 .basePath("/auth/refresh")
                     .port(TestConfigs.SERVER_PORT)
-                    .contentType(TestConfigs.CONTENT_TYPE_YML)
+                    .contentType(TestConfigs.CONTENT_TYPE_JSON)
                         .pathParam("username", tokenVO.getUsername())
                         .header(TestConfigs.HEADER_PARAM_AUTHORIZATION, TestConfigs.AUTHORIZATION_PREFIX + tokenVO.getRefreshToken())
                 .when()

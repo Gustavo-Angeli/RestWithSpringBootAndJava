@@ -1,24 +1,30 @@
-package br.com.gusta.integrationtests.controller.withyaml;
+package br.com.gusta.integrationtests.controller.withjson;
 
-import br.com.gusta.configs.*;
-import br.com.gusta.integrationtests.testcontainers.*;
-import br.com.gusta.integrationtests.vo.*;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.databind.*;
-import io.restassured.builder.*;
-import io.restassured.filter.log.*;
-import io.restassured.specification.*;
-import org.junit.jupiter.api.*;
-import org.springframework.boot.test.context.*;
-
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import br.com.gusta.integrationtests.vo.*;
+import org.junit.jupiter.api.*;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.gusta.configs.TestConfigs;
+import br.com.gusta.integrationtests.testcontainers.AbstractIntegrationTest;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.specification.RequestSpecification;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PersonControllerYamlTests extends AbstractIntegrationTest {
+class PersonControllerJsonTests extends AbstractIntegrationTest {
 
 	private static RequestSpecification specification;
 	private static ObjectMapper objectMapper;
@@ -44,7 +50,7 @@ class PersonControllerYamlTests extends AbstractIntegrationTest {
 		var accessToken = given()
 				.basePath("/auth/signin")
 					.port(TestConfigs.SERVER_PORT)
-					.contentType(TestConfigs.CONTENT_TYPE_YML)
+					.contentType(TestConfigs.CONTENT_TYPE_JSON)
 				.body(user)
 					.when()
 				.post()
@@ -71,7 +77,7 @@ class PersonControllerYamlTests extends AbstractIntegrationTest {
 		mockPerson();
 
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 					.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCALHOST)
 					.body(person)
 					.when()
@@ -108,7 +114,7 @@ class PersonControllerYamlTests extends AbstractIntegrationTest {
 		mockPerson();
 
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 					.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_MY_GITHUB)
 					.body(person)
 					.when()
@@ -130,7 +136,7 @@ class PersonControllerYamlTests extends AbstractIntegrationTest {
 		mockPerson();
 
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 					.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_LOCALHOST)
 					.pathParam("id", person.getId())
 					.when()
@@ -168,7 +174,7 @@ class PersonControllerYamlTests extends AbstractIntegrationTest {
 		mockPerson();
 
 		var content = given().spec(specification)
-				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.contentType(TestConfigs.CONTENT_TYPE_JSON)
 					.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_MY_GITHUB)
 					.pathParam("id", person.getId())
 					.when()
