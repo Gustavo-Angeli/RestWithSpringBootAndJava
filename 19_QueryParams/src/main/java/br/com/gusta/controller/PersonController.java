@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,8 +84,16 @@ public class PersonController {
 					@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
 			}
 	)
-	public List<PersonVO> findAll(){
-		return service.findAll();
+	public ResponseEntity<PagedModel<EntityModel<PersonVO>>> findAll(
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "limit", defaultValue = "12") Integer limit,
+			@RequestParam(value = "direction", defaultValue = "asc") String direction
+	){
+
+		var sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+		Pageable pageable = PageRequest.of(page, limit, Sort.by(sortDirection, "id"));
+		return ResponseEntity.ok(service.findAll(pageable));
 	}
 
 	@CrossOrigin(origins = {"http://localhost:8080", "https://erudio.com.br"})
