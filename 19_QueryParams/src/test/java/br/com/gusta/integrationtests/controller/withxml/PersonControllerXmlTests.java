@@ -3,6 +3,7 @@ package br.com.gusta.integrationtests.controller.withxml;
 import br.com.gusta.configs.*;
 import br.com.gusta.integrationtests.testcontainers.*;
 import br.com.gusta.integrationtests.vo.*;
+import br.com.gusta.integrationtests.vo.wrappers.xml.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import io.restassured.builder.*;
@@ -28,7 +29,7 @@ class PersonControllerXmlTests extends AbstractIntegrationTest {
 	@BeforeAll
 	public static void setup() {
 		objectMapper = new ObjectMapper();
-		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
 		/*
 		This objectMapper is used to disable fails when the properties of JSON are unknown,
 		because the PersonVO not have the hateoas attributes.
@@ -57,7 +58,7 @@ class PersonControllerXmlTests extends AbstractIntegrationTest {
 
 		specification = new RequestSpecBuilder()
 				.addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
-				.setBasePath("/api/person/v1")
+				.setBasePath("/api/person/v1/")
 				.setPort(TestConfigs.SERVER_PORT)
 					.addFilter(new RequestLoggingFilter(LogDetail.ALL))
 					.addFilter(new ResponseLoggingFilter(LogDetail.ALL))
