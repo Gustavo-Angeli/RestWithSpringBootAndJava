@@ -3,7 +3,6 @@ package br.com.gusta.integrationtests.controller.withxml;
 import br.com.gusta.configs.*;
 import br.com.gusta.integrationtests.testcontainers.*;
 import br.com.gusta.integrationtests.vo.*;
-import br.com.gusta.integrationtests.vo.wrappers.xml.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import io.restassured.builder.*;
