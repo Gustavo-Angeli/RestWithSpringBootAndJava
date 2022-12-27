@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.gusta.model.Person;
+import br.com.gusta.data.vo.v1.PersonVO;
 import br.com.gusta.services.PersonServices;
 
 @RestController
@@ -33,7 +33,7 @@ public class PersonController {
 	@GetMapping(
 			value = "/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public Person findByID(
+	public PersonVO findByID(
 		@PathVariable(value = "id") Long id){
 			return service.findByID(id);
 			
@@ -41,14 +41,14 @@ public class PersonController {
 	
 	@GetMapping(
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Person> findAll(){
+	public List<PersonVO> findAll(){
 		return service.findAll();
 	}
 	
 	@PostMapping(
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Person create(@RequestBody Person person){
+	public PersonVO create(@RequestBody PersonVO person){
 		
 		return service.create(person);
 		
@@ -57,7 +57,7 @@ public class PersonController {
 	@PutMapping(
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Person update(@RequestBody Person person){
+	public PersonVO update(@RequestBody PersonVO person){
 		
 		return service.update(person);
 		
