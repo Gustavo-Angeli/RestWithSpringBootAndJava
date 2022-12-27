@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.gusta</groupId>
-	<artifactId>19_QueryParams</artifactId>
+	<artifactId>20_UploadAndDownload</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>18_PatchVerb</name>
-	<description>19_QueryParams</description>
+	<description></description>
 	<properties>
 		<java.version>18</java.version>
 		<testcontainers.version>1.16.3</testcontainers.version>
