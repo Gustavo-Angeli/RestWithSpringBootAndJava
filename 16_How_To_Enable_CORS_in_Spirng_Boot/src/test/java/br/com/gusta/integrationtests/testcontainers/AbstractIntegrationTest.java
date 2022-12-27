@@ -1,4 +1,4 @@
-package br.com.gusta.integrationtests.textcontainers;
+package br.com.gusta.integrationtests.testcontainers;
 
 import org.springframework.context.*;
 import org.springframework.core.env.*;
