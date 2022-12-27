@@ -1,4 +1,4 @@
-package br.com.gusta.model;
+package br.com.gusta.model.v1;
 
 import java.io.Serializable;
 import java.util.Objects;

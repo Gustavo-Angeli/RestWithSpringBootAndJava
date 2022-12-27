@@ -1,4 +1,4 @@
-package br.com.gusta.services;
+package br.com.gusta.services.v1;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.gusta.data.vo.v1.PersonVO;
+import br.com.gusta.data.vo.v2.PersonVOV2;
 import br.com.gusta.exceptions.ResourceNotFoundException;
 import br.com.gusta.mapper.DozerMapper;
-import br.com.gusta.model.Person;
-import br.com.gusta.repositories.PersonRepositoy;
+import br.com.gusta.mapper.custom.PersonMapper;
+import br.com.gusta.model.v1.Person;
+import br.com.gusta.repositories.v1.PersonRepositoy;
 
 @Service
 public class PersonServices {
@@ -19,10 +21,16 @@ public class PersonServices {
 	
 	@Autowired
 	PersonRepositoy repository;
+	@Autowired
+	PersonMapper mapper;
 	
 	public List<PersonVO> findAll() {
 		logger.info("Finding all persons!");
 		return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+	}
+	public List<PersonVOV2> findAllV2() {
+		logger.info("Finding all persons!");
+		return DozerMapper.parseListObjects(repository.findAll(), PersonVOV2.class);
 	}
 	
 	
@@ -37,6 +45,13 @@ public class PersonServices {
 		logger.info("Creating one person!");
 		var entity = DozerMapper.parseObject(person, Person.class);
 		var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+		return vo;
+		
+	}
+	public PersonVOV2 createV2(PersonVOV2 person) {
+		logger.info("Creating one person with V2!");
+		var entity = mapper.convertVOToEntity(person);
+		var vo = mapper.convertEntityToVO(repository.save(entity));
 		return vo;
 		
 	}

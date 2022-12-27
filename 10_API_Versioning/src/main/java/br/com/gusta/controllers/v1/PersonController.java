@@ -1,4 +1,4 @@
-package br.com.gusta;
+package br.com.gusta.controllers.v1;
 
 import java.util.List;
 
@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gusta.data.vo.v1.PersonVO;
-import br.com.gusta.services.PersonServices;
+import br.com.gusta.data.vo.v2.PersonVOV2;
+import br.com.gusta.services.v1.PersonServices;
 
 @RestController
 @RequestMapping("/person")
@@ -44,6 +45,12 @@ public class PersonController {
 	public List<PersonVO> findAll(){
 		return service.findAll();
 	}
+	@GetMapping(
+			value = "v2/findAll",
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<PersonVOV2> findAllV2(){
+		return service.findAllV2();
+	}
 	
 	@PostMapping(
 			produces = MediaType.APPLICATION_JSON_VALUE,
@@ -51,6 +58,15 @@ public class PersonController {
 	public PersonVO create(@RequestBody PersonVO person){
 		
 		return service.create(person);
+		
+	}
+	@PostMapping(
+			value = "/v2",
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public PersonVOV2 createV2(@RequestBody PersonVOV2 person){
+		
+		return service.createV2(person);
 		
 	}
 	
