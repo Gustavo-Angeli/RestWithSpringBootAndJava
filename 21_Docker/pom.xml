@@ -11,7 +11,7 @@
 	<groupId>br.com.gusta</groupId>
 	<artifactId>21_Docker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>18_PatchVerb</name>
+	<name>21_Docker</name>
 	<description></description>
 	<properties>
 		<java.version>18</java.version>
